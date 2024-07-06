@@ -3,11 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 export const passwordSlice = createSlice({
   name: 'passwords',
   initialState: {
-    value: {}
+    value: [
+    ]
   },
   reducers: {
-    passWordListUpdate: (state) => {
-      // state.value = 
+    passWordListUpdate: (state, action) => {
+      state.value = action.payload
     }
   }
 })

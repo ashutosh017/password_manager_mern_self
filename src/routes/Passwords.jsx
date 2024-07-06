@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/clerk-react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectPasswords } from '../store/passwords/passwordslice';
-
 
 
 
 function Passwords() {
     // const [passArray, setPassArray] = useState([]);
     const passArray = useSelector(selectPasswords)
-
+    console.log("passArray: ", passArray);
     const { isSignedIn } = useAuth();
     const { user } = useUser();
 
@@ -43,7 +42,8 @@ function Passwords() {
 
         // (() => { handleGet(); console.log("iife invoked") })()
 
-        handleGet();
+        // handleGet();
+        // dispatch(passWordListUpdate())
 
     }, [])
 

@@ -2,7 +2,12 @@ import { useState } from "react";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser, useAuth } from "@clerk/clerk-react";
 import { v4 as uuidv4 } from 'uuid'
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { passWordListUpdate } from "./store/passwords/passwordslice";
+
+
 export default function App() {
+  const dispatch = useDispatch();
 
   const { isSignedIn } = useAuth();
   const { user } = useUser();
@@ -61,7 +66,8 @@ export default function App() {
         const result = await response.json();
         console.log('all passwords:', result);
         // setPassArray([...result])
-        sessionStorage.setItem('myValue', JSON.stringify([...result]));
+        // sessionStorage.setItem('myValue', JSON.stringify([...result]));
+        dispatch(passWordListUpdate([...result]));
       } catch (error) {
         console.error('Error:', error);
       }

@@ -16,9 +16,8 @@ const router = createBrowserRouter([
   {
     path: "/",
     element:
-      <Provider store={store}>
-        <App />
-      </Provider>
+
+      <App />
   },
   {
     path: "/passwords",
@@ -30,7 +29,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ClerkProvider>
   </React.StrictMode>,
 )
