@@ -1,37 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useAuth, useUser } from '@clerk/clerk-react';
-
+import { useSelector } from 'react-redux';
+import { selectPasswords } from '../store/passwords/passwordslice';
 
 
 
 
 function Passwords() {
-    const [passArray, setPassArray] = useState([]);
+    // const [passArray, setPassArray] = useState([]);
+    const passArray = useSelector(selectPasswords)
+
     const { isSignedIn } = useAuth();
     const { user } = useUser();
-    const handleGet = async () => {
-        if (isSignedIn)
-            try {
-                const response = await fetch('http://localhost:3000/getAllPasswords', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ uniqueId: user.id })
-                });
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-
-                const result = await response.json();
-                console.log('all passwords:', result);
-                setPassArray([...result])
-                sessionStorage.setItem('myValue', JSON.stringify([...result]));
-            } catch (error) {
-                console.error('Error:', error);
-            }
-    }
     const handleDelete = async (uniqueId) => {
         if (isSignedIn)
             try {

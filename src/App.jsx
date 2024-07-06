@@ -43,6 +43,30 @@ export default function App() {
     }
   };
 
+  const handleGet = async () => {
+    if (isSignedIn)
+      try {
+        const response = await fetch('http://localhost:3000/getAllPasswords', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ uniqueId: user.id })
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const result = await response.json();
+        console.log('all passwords:', result);
+        // setPassArray([...result])
+        sessionStorage.setItem('myValue', JSON.stringify([...result]));
+      } catch (error) {
+        console.error('Error:', error);
+      }
+  }
+
 
 
   return (
@@ -111,6 +135,7 @@ export default function App() {
 
         </form>
         <button
+          onClick={handleGet}
           className=""
         >
           <Link className="px-4 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-700" to={`/passwords`}>
