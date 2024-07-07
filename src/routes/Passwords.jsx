@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPasswords } from '../store/passwords/passwordslice';
-
-
+import { Link } from 'react-router-dom';
+import { setUpdateFormState } from '../store/passwords/updateFormSlice';
 
 function Passwords() {
-    // const [passArray, setPassArray] = useState([]);
-    const passArray = useSelector(selectPasswords)
-    console.log("passArray: ", passArray);
+    const dispatch = useDispatch();
+    // const passArray = useSelector(selectPasswords);
+    const passArray = new Array();
+    passArray.push(...JSON.parse(localStorage.getItem('myValue') ?? "[]"))
+    console.log(passArray);
     const { isSignedIn } = useAuth();
-    const { user } = useUser();
 
     const handleDelete = async (uniqueId) => {
         if (isSignedIn)
@@ -28,62 +29,68 @@ function Passwords() {
                 }
 
                 const result = await response.json();
-                console.log('all passwords:', result);
-                setPassArray([...result])
-                sessionStorage.setItem('myValue', JSON.stringify([...result]));
             } catch (error) {
                 console.error('Error:', error);
             }
-    }
-    useEffect(() => {
-        setTimeout(() => {
-            console.log("useeffect ran after 3 secs")
-        }, 3000);
-
-        // (() => { handleGet(); console.log("iife invoked") })()
-
-        // handleGet();
-        // dispatch(passWordListUpdate())
-
-    }, [])
-
-    const func = () => setTemp(temp + 1);
+    };
 
     return (
-        <div>
-            <h1>Your Passwords</h1>
-            {/* {passArray.length} */}
-            <table className='border w-full'>
-                <tbody className='w-full'>
-                    {passArray.length > 0 && passArray.map((password, index) => (
-                        <React.Fragment key={index}>
-                            <tr className='border-b bg-orange-300 '>
-                                <td>{index + 1}</td>
-                                <td><button onClick={() => handleDelete(password.uniqueId)} className='bg-gray-50 rounded-lg px-2 hover:bg-yellow-300'>delete</button></td>
-                                <td><button className='bg-gray-50 rounded-lg px-2 hover:bg-yellow-300'>update</button></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Website URL</td>
-                                <td>{password.websiteUrl}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>Username</td>
-                                <td>{password.username}</td>
-                            </tr>
-                            <tr className='border-b'>
-                                <td></td>
-                                <td>Password</td>
-                                <td>{password.password}</td>
-                            </tr>
-                        </React.Fragment>
-                    ))}
-                </tbody>
-            </table>
+        <div className='bg-red-700 h-screen'>
+            <div className=" mx-auto p-4 dark:bg-gray-900 ">
+                <h1 className="text-3xl font-bold text-center mb-8 text-gray-700 dark:text-gray-300">Your Passwords</h1>
+                {passArray.length == 0 ? <h2 className='text-white px-4 py-4'>No Passwords to show.</h2> :
 
+                    <table className="w-full bg-white shadow-lg rounded-lg overflow-hidden dark:bg-gray-800">
+                        <thead className="bg-gradient-to-r from-blue-500 to-teal-500 text-white">
+
+                            <tr>
+                                <th className="p-4">#</th>
+                                <th className="p-4">Actions</th>
+                                <th className="p-4">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {passArray.map((password, index) => (
+                                <React.Fragment key={index}>
+                                    <tr className="border-b border-gray-200 dark:border-gray-700">
+                                        <td className="p-4 text-center text-gray-700 dark:text-gray-300">{index + 1}</td>
+                                        <td className="p-4 text-center">
+                                            <button
+                                                onClick={() => handleDelete(password.uniqueId)}
+                                                className="bg-red-500 text-white rounded-full px-4 py-2 m-1 hover:bg-red-700 transition duration-300"
+                                            >
+                                                Delete
+                                            </button>
+                                            <Link to={'/'}>
+                                                <button
+                                                    onClick={() => dispatch(setUpdateFormState(password))}
+                                                    className="bg-blue-500 text-white rounded-full px-4 py-2 m-1 hover:bg-blue-700 transition duration-300"
+                                                >
+                                                    Update
+                                                </button>
+                                            </Link>
+                                        </td>
+                                        <td className="p-4 text-gray-700 dark:text-gray-300">
+                                            <div className="mb-2">
+                                                <span className="font-bold">Website URL:</span> <a href={password.websiteUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{password.websiteUrl}</a>
+                                            </div>
+                                            <div className="mb-2">
+                                                <span className="font-bold">Username:</span> {password.username}
+                                            </div>
+                                            <div>
+                                                <span className="font-bold">Password:</span> {password.password}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </React.Fragment>
+                            ))}
+                        </tbody>
+                    </table>
+                }
+
+            </div>
         </div>
-    )
+    );
 }
 
-export default Passwords
+export default Passwords;
