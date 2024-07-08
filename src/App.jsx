@@ -95,7 +95,7 @@ export default function App() {
 
   return (
     <div className="dark:bg-gray-900 h-screen flex flex-col items-center justify-center  ">
-      <header className="px-4 h-14 flex items-center w-full bg-gray-800 ">
+      <header className="px-4 h-14 flex items-center w-full bg-gray-800 text-white">
         <SignedOut>
           <SignInButton />
         </SignedOut>
