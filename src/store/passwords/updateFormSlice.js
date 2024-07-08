@@ -12,12 +12,19 @@ export const formSlice = createSlice({
     reducers: {
         setUpdateFormState: (state, action) => {
             state.value = action.payload
+        },
+        clearUpdateFormState: (state) => {
+            state.value = {
+                websiteUrl: '',
+                username: '',
+                password: ''
+            }
         }
     }
 })
 
 export const selectUpdateFormData = (state) => state.updateForm.value
 
-export const { setUpdateFormState } = formSlice.actions
+export const { setUpdateFormState, clearUpdateFormState } = formSlice.actions
 
 export default formSlice.reducer

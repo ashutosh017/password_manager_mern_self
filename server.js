@@ -29,11 +29,11 @@ app.delete('/deletePassword', async (req, res) => {
 app.put('/editPasswordDetails', async (req, res) => {
     const query = await Data.findOneAndUpdate({ uniqueId: req.body.uniqueId }, req.body, { new: true });
     console.log("update successful: ", query);
-    res.json({ msg: "update successful" });
+    res.json({ msg: "password details updated successfully" });
 })
 
 app.post('/getAllPasswords', async (req, res) => {
-    const passwords = await Data.find({ userAuthId: req.body.uniqueId });
+    const passwords = await Data.find({ userAuthId: req.body.userAuthId });
     console.log(req.body)
     console.log("These are all passwords: ", passwords)
     res.send(passwords);
