@@ -4,12 +4,13 @@ import { useDispatch } from 'react-redux';
 import { passWordListUpdate } from '../store/passwords/passwordslice';
 import { Link } from 'react-router-dom';
 import { setUpdateFormState } from '../store/passwords/updateFormSlice';
-
+import { api } from '../App.jsx'
 function Passwords() {
     const dispatch = useDispatch();
     const { user } = useUser();
     const [passArray, setPassArray] = useState([...JSON.parse(localStorage.getItem('myValue') ?? "[]")]);
     const { isSignedIn } = useAuth();
+
 
     useEffect(() => {
         handleGet();
@@ -18,7 +19,7 @@ function Passwords() {
     const handleGet = async () => {
         if (isSignedIn) {
             try {
-                const response = await fetch('http://localhost:3000/getAllPasswords', {
+                const response = await fetch(`${api}/getAllPasswords`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ function Passwords() {
     const handleDelete = async (uniqueId) => {
         if (isSignedIn) {
             try {
-                const response = await fetch('http://localhost:3000/deletePassword', {
+                const response = await fetch(`${api}/deletePassword`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',

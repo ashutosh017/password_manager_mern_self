@@ -1,3 +1,4 @@
+// import 'dotenv/config'
 import { useEffect, useState } from "react";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser, useAuth } from "@clerk/clerk-react";
 import { v4 as uuidv4 } from 'uuid';
@@ -6,6 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { passWordListUpdate } from "./store/passwords/passwordslice";
 import { clearUpdateFormState, selectUpdateFormData, setUpdateFormState } from "./store/passwords/updateFormSlice";
 import { useNavigate } from 'react-router-dom';
+
+// export const api = "http://localhost:3000"
+export const api = "https://password-manager-mern-self-backend.onrender.com"
 
 export default function App() {
   const dispatch = useDispatch();
@@ -42,7 +46,7 @@ export default function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/', {
+      const response = await fetch(`${api}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +76,7 @@ export default function App() {
     dispatch(clearUpdateFormState(formData));
     if (isSignedIn) {
       try {
-        const response = await fetch('http://localhost:3000/editPasswordDetails', {
+        const response = await fetch(`${api}/editPasswordDetails`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -109,14 +113,14 @@ export default function App() {
         </SignedIn>
       </header>
       <div className="flex flex-col items-center justify-center w-full flex-1 px-4 ">
-        <form onSubmit={updateFormData.uniqueId ? handleUpdate : handleSubmit} className="bg-gray-800 text-white p-6 rounded-lg shadow-md w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-5 text-center">{isSignedIn ? 'Submit your password details' : 'Please Sign in to continue'}</h2>
+        <form onSubmit={updateFormData.uniqueId ? handleUpdate : handleSubmit} className="bg-gray-800 text-black p-6 rounded-lg shadow-md w-full max-w-md">
+          <h2 className="text-white text-2xl font-bold mb-5 text-center">{isSignedIn ? 'Submit your password details' : 'Please Sign in to continue'}</h2>
           <div className="mb-4">
             <label htmlFor="websiteUrl" className="block text-gray-100 font-semibold mb-2">
               Website URL
             </label>
             <input
-              type="url"
+              type="text"
               id="websiteUrl"
               name="websiteUrl"
               value={formData.websiteUrl}
