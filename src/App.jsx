@@ -45,6 +45,11 @@ export default function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setFormData({
+      websiteUrl: '',
+      username: '',
+      password: '',
+    });
     try {
       const response = await fetch(`${api}/`, {
         method: 'POST',
@@ -60,6 +65,7 @@ export default function App() {
 
       const result = await response.json();
       console.log('Form Data Submitted:', result);
+      alert("Password details added successfully")
 
     } catch (error) {
       console.error('Error:', error);
