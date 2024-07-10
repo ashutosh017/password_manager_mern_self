@@ -120,7 +120,7 @@ export default function App() {
 
   return (
     <div className="dark:bg-gray-900 h-screen flex flex-col items-center justify-center  ">
-      <ToastContainer autoClose={3000} pauseOnHover={false} draggable="mouse" />
+      <ToastContainer autoClose={3000} pauseOnHover={false} draggable={true} />
       <header className="px-4 h-14 flex items-center w-full bg-gray-800 text-white">
         <SignedOut>
           <SignInButton />
