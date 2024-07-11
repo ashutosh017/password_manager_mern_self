@@ -85,7 +85,7 @@ function Passwords() {
                             {passArray.map((password, index) => (
                                 <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
                                     <td className="p-2 sm:p-4 text-xs sm:text-sm">{index + 1}</td>
-                                    <td className="p-2 sm:p-4 text-xs sm:text-sm flex flex-col items-center space-y-2 w-12 bg-red-700">
+                                    <td className="p-2 sm:p-4 text-xs sm:text-sm flex flex-col items-center space-y-2 w-12">
                                         <button
                                             onClick={() => handleDelete(password.uniqueId)}
                                             className="bg-red-500 text-white rounded-full px-1 sm:px-2 py-1 hover:bg-red-700 transition duration-300"
