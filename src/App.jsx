@@ -85,7 +85,7 @@ export default function App() {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-    toast("Wait...")
+    toast.success("Password details updated successfully", { onClose: () => navigate("/passwords"), })
     setFormData({
       websiteUrl: '',
       username: '',
@@ -108,8 +108,6 @@ export default function App() {
 
         // const result = await response.json();
         // alert(result.msg);
-        toast.dismiss();
-        toast.success("Password details updated successfully", { onClose: () => navigate("/passwords"), })
 
         // navigate('/passwords');
       } catch (error) {
@@ -120,7 +118,7 @@ export default function App() {
 
   return (
     <div className="dark:bg-gray-900 h-screen flex flex-col items-center justify-center  ">
-      <ToastContainer autoClose={3000} pauseOnHover={false} draggable={true} />
+      <ToastContainer autoClose={1000} pauseOnHover={false} draggable={true} />
       <header className="px-4 h-14 flex items-center w-full bg-gray-800 text-white">
         <SignedOut>
           <SignInButton />

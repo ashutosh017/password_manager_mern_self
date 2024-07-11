@@ -42,6 +42,8 @@ function Passwords() {
     };
 
     const handleDelete = async (uniqueId) => {
+        localStorage.setItem('myValue', JSON.stringify(passArray.filter((i) => i.uniqueId !== uniqueId)));
+        setPassArray([...JSON.parse(localStorage.getItem('myValue') ?? "[]")]);
         if (isSignedIn) {
             try {
                 const response = await fetch(`${api}/deletePassword`, {
@@ -57,9 +59,7 @@ function Passwords() {
                 }
 
                 const result = await response.json();
-                console.log("result of deletion: ", result);
-                localStorage.setItem('myValue', JSON.stringify(passArray.filter((i) => i.uniqueId !== uniqueId)));
-                setPassArray([...JSON.parse(localStorage.getItem('myValue') ?? "[]")]);
+                // console.log("result of deletion: ", result);
             } catch (error) {
                 console.error('Error:', error);
             }
@@ -85,7 +85,7 @@ function Passwords() {
                             {passArray.map((password, index) => (
                                 <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
                                     <td className="p-2 sm:p-4 text-xs sm:text-sm">{index + 1}</td>
-                                    <td className="p-2 sm:p-4 text-xs sm:text-sm flex flex-col items-center space-y-2">
+                                    <td className="p-2 sm:p-4 text-xs sm:text-sm flex flex-col items-center space-y-2 w-12 bg-red-700">
                                         <button
                                             onClick={() => handleDelete(password.uniqueId)}
                                             className="bg-red-500 text-white rounded-full px-1 sm:px-2 py-1 hover:bg-red-700 transition duration-300"
