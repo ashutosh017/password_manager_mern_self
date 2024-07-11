@@ -8,7 +8,7 @@ import { api } from '../App.jsx'
 function Passwords() {
     const dispatch = useDispatch();
     const { user } = useUser();
-    const [passArray, setPassArray] = useState([...JSON.parse(localStorage.getItem('myValue') ?? "[]")]);
+    const [passArray, setPassArray] = useState([...JSON.parse(sessionStorage.getItem('myValue') ?? "[]")]);
     const { isSignedIn } = useAuth();
 
 
@@ -32,8 +32,8 @@ function Passwords() {
                 }
 
                 const result = await response.json();
-                localStorage.setItem('myValue', JSON.stringify([...result]));
-                setPassArray([...JSON.parse(localStorage.getItem('myValue') ?? "[]")]);
+                sessionStorage.setItem('myValue', JSON.stringify([...result]));
+                setPassArray([...JSON.parse(sessionStorage.getItem('myValue') ?? "[]")]);
                 dispatch(passWordListUpdate([...result]));
             } catch (error) {
                 console.error('Error:', error);
@@ -42,8 +42,8 @@ function Passwords() {
     };
 
     const handleDelete = async (uniqueId) => {
-        localStorage.setItem('myValue', JSON.stringify(passArray.filter((i) => i.uniqueId !== uniqueId)));
-        setPassArray([...JSON.parse(localStorage.getItem('myValue') ?? "[]")]);
+        sessionStorage.setItem('myValue', JSON.stringify(passArray.filter((i) => i.uniqueId !== uniqueId)));
+        setPassArray([...JSON.parse(sessionStorage.getItem('myValue') ?? "[]")]);
         if (isSignedIn) {
             try {
                 const response = await fetch(`${api}/deletePassword`, {
