@@ -36,7 +36,8 @@ export default function App() {
     }
   }, []);
 
-  const showPassword = () => {
+  const showPassword = (e) => {
+    e.preventDefault();
     if (show) {
       passRef.current.type = "password";
     }
@@ -134,7 +135,7 @@ export default function App() {
       </header>
       {/* <button className="text-white" onClick={notify} >click</button> */}
       <div className="flex flex-col items-center justify-center w-full flex-1 px-4 ">
-        <div className="bg-gray-800 text-black p-6 rounded-lg shadow-md w-full max-w-md">
+        <form onSubmit={updateFormData.uniqueId ? handleUpdate : handleSubmit} className="bg-gray-800 text-black p-6 rounded-lg shadow-md w-full max-w-md">
           <h2 className="text-white text-2xl font-bold mb-5 text-center">{isSignedIn ? 'Submit your password details' : 'Please Sign in to continue'}</h2>
           <div className="mb-4">
             <label htmlFor="websiteUrl" className="block text-gray-100 font-semibold mb-2">
@@ -182,13 +183,14 @@ export default function App() {
             </div>
           </div>
           <button
+            type="submit"
             disabled={!isSignedIn}
-            onClick={updateFormData.uniqueId ? handleUpdate : handleSubmit}
+
             className="disabled:bg-gray-500 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-700"
           >
             {updateFormData.uniqueId ? 'Update Password Details' : 'Submit Password Details'}
           </button>
-        </div>
+        </form>
         <button
           disabled={!isSignedIn}
           className="mt-4 px-4 bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-700 disabled:bg-gray-500"
